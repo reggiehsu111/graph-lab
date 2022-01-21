@@ -1,82 +1,40 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import Graph from "react-graph-vis";
+import { GraphLayout } from '@/GraphLayout';
 
-import ReactFlow, {
-  isEdge,
-  removeElements,
-  addEdge,
-  MiniMap,
-  Controls,
-  Background,
-} from 'react-flow-renderer';
-import {Elements as initElements} from '@/Elements';
-import CircleNode from './CustomNodes/CircleNode';
-
-const connectionLineStyle = { stroke: '#0f0' };
-const snapGrid = [20, 20];
-const nodeTypes = {
-  circleNode: CircleNode,
-};
-
-const Graphs = () => {
-  const [reactflowInstance, setReactflowInstance] = useState(null);
-  const [elements, setElements] = useState(initElements);
-
-  useEffect(() => {
-    if (reactflowInstance && elements.length > 0) {
-      reactflowInstance.fitView();
-    }
-  }, [reactflowInstance, elements.length]);
-
-  const onElementsRemove = useCallback(
-    (elementsToRemove) =>
-      setElements((els) => removeElements(elementsToRemove, els)),
-    []
-  );
-  const onConnect = useCallback(
-    (params) =>
-      setElements((els) =>
-        addEdge({ ...params, animated: true, style: { stroke: '#fff' } }, els)
-      ),
-    []
-  );
-
-  const onLoad = useCallback(
-    (rfi) => {
-      if (!reactflowInstance) {
-        setReactflowInstance(rfi);
-      }
+const options = {
+    nodes: {
+      shape: 'circle',
+      borderWidth: 0,
+      color: '#ff0000',
+      font: {
+        color: '#fff',
+        size: 15,
+        align: 'center'
+      },
     },
-    [reactflowInstance]
-  );
+    edges: {
+      color: "#000000",
+      arrows: {
+        to: {
+          enabled: false,
+        },
+      },
+    },
+  };
 
+const CustomGraph = () => {
   return (
-    <ReactFlow
-      elements={elements}
-      onElementsRemove={onElementsRemove}
-      onConnect={onConnect}
-      style={{ background: "#F0F0F0" }}
-      onLoad={onLoad}
-      nodeTypes={nodeTypes}
-      connectionLineStyle={connectionLineStyle}
-      snapToGrid={true}
-      snapGrid={snapGrid}
-      defaultZoom={1.5}
-    >
-      <MiniMap
-        nodeStrokeColor={(n) => {
-          if (n.type === 'input') return '#0041d0';
-          if (n.type === 'circleNode') return '#ff0022';
-          if (n.type === 'output') return '#ff0072';
-        }}
-        nodeColor={(n) => {
-          if (n.type === 'circleNode') return '#ff0072';
-          return '#fff';
-        }}
-      />
-      <Controls />
-      <Background />
-    </ReactFlow>
+      <div className="Graph">
+        <Graph
+          graph={GraphLayout}
+          options={options}
+          style={{
+            height: "100vh"
+          }}
+        />
+      </div>
   );
 };
 
-export default Graphs;
+export default CustomGraph;

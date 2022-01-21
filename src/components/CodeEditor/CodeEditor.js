@@ -1,8 +1,5 @@
 import * as React from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
-import styled from "styled-components";
-import cssToObject from "css-to-object";
-import SplitPane from "react-split-pane";
 
 require("codemirror/mode/clike/clike");
 require("codemirror/lib/codemirror.css");
