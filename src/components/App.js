@@ -12,8 +12,8 @@ const App = () =>
 			<Navigation />
 			
 			<Row className="vh-100">
-			<Col> <CustomEditor/> </Col>
-			<Col> <Graphs /> </Col>
+			<Col className="p-0"> <CustomEditor/> </Col>
+			<Col className="p-0"> <Graphs /> </Col>
 			</Row>
 		</Container>
 	);
